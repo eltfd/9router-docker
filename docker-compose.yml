@@ -3,7 +3,7 @@ services:
     build: .
     container_name: 9router
     ports:
-      - "1270.0.1:20128:20128"
+      - "127.0.0.1:20128:20128"
     volumes:
       # Map a local folder to persist your provider keys and settings
       - ./data:/root/.9router
