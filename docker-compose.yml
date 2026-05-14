@@ -8,3 +8,4 @@ services:
       # Map a local folder to persist your provider keys and settings
       - ./data:/root/.9router
     restart: unless-stopped
+    tty: true
