@@ -6,5 +6,5 @@ services:
       - "127.0.0.1:20128:20128"
     volumes:
       # Map a local folder to persist your provider keys and settings
-      - ./data:/root/.9router
+      - ./data:/app/data
     restart: unless-stopped
