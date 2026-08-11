@@ -2,9 +2,37 @@ services:
   9router:
     build: .
     container_name: 9router
+    mem_limit: 1g
+    cpus: 1.0
     ports:
-      - "127.0.0.1:20128:20128"
+      - "0.0.0.0:20129:20128"
     volumes:
       # Map a local folder to persist your provider keys and settings
       - ./data:/app/data
     restart: unless-stopped
+    networks:
+      - default
+      - crypto-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: 9router-nginx
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.5
+    ports:
+      - "0.0.0.0:20128:20128"
+      - "0.0.0.0:20130:20130"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./le-fullchain.pem:/etc/nginx/le-fullchain.pem:ro
+      - ./le-privkey.pem:/etc/nginx/le-privkey.pem:ro
+    depends_on:
+      - 9router
+    networks:
+      - default
+      - crypto-net
+
+networks:
+  crypto-net:
+    external: true
